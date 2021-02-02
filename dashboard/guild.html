@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>loading...</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<canvas id="genCanvas" height="20" style="display: none;"></canvas>
+<h1 class="title">Server Owner</h1>
+<main class="ownerlist">
+    <div class="owner"><div class="ownerinfo"><img class="ownericon" src="data:image/png;base64,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"><span class="ownertext">loading...</span></div></div>
+</main>
+
+<h1 class="title">Server Stats/Information</h1>
+<main class="statslist"></main>
+
+<script src="./guild.js"></script>
+</body>
+</html>
