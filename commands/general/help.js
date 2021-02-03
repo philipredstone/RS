@@ -9,7 +9,6 @@ class HelpCommand extends Command {
     }
 
     async exec(message) {
-        
         message.delete();
         const embed = this.client.util
             .embed()

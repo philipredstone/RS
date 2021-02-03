@@ -24,9 +24,7 @@ function getLevel(guild,id,msg) {
         if(!results[0]) {
             connection.query(`INSERT INTO user (guildid,userid,level,xp) VALUES (${guild},${id},0,0)`, function (error, results, fields) {
                 if (error) throw error;
-                connection.query(`SELECT * FROM user WHERE userid = ${id} AND guildid = ${guild}`, function (error, results, fields) {
-                    addLevel(guild,id,results[0],msg)
-                });
+                addLevel(guild,id,{level: 0, xp: 0},msg)
             });
         } else {
             addLevel(guild,id,results[0],msg)

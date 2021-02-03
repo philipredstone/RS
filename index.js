@@ -21,14 +21,7 @@ const port = 3000;
 client.login(process.env.TOKEN);
 
 client.on('message', async (message) => {
-    //connection.query(`INSERT INTO messages (timestamp,userid) VALUES (UNIX_TIMESTAMP(),${message.author.id})`, function (error, results, fields) {
-    //    if (error) throw error;
-    //});
     LevelSystem(message.channel.guild.id,message.author.id,message,false)
-    //connection.query(`SELECT COUNT(*) AS count FROM messages WHERE userid = ${message.author.id}`, function (error, results, fields) {
-    //    if (error) throw error;
-    //    console.log(results[0].count)
-    //});
 });
 
 
