@@ -20,19 +20,27 @@ const port = 3000;
 /****************************/
 client.login(process.env.TOKEN);
 
+
+
 client.on('message', async (message) => {
     LevelSystem(message.channel.guild.id,message.author.id,message,false)
 });
 
 
 
-
+exports.name = client;
 
 
 
 /****************************/
 /*      WEB DASHBOARD       */
 /****************************/
+app.get('/', (req, res) => {
+    res.redirect('https://discord.com/api/oauth2/authorize?client_id=746037195428724837&permissions=2147483639&scope=bot');
+});
+
+
+
 app.use('/dashboard', express.static(__dirname + '/dashboard'))
 
 app.get('/dashboard', (req, res) => {
@@ -91,6 +99,7 @@ app.get('/guilds', (req, res) => {
         res.send("["+data.join(", ")+"]");
     });
 });
+ 
 
 app.get('/guild/:guildID', (req, res) => {
     let options = {

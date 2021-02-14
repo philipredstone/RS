@@ -42,7 +42,7 @@ class HelpCommand extends Command {
             }
         });
         if(commandlist != "")
-            commandEmbed.setDescription(`Prefix: \`${message.guild.prefix}\`\n${commandlist}\n\n \`help <command>\` to get command specific help!\``)
+            commandEmbed.setDescription(`Prefix: \`${message.guild.prefix}\`\n${commandlist}\n\n \`help <command>\` to get command specific help!`)
         message.channel.send(commandEmbed)
     }
 }
