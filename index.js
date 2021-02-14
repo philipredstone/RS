@@ -25,6 +25,16 @@ client.login(process.env.TOKEN);
 client.on('message', async (message) => {
     LevelSystem(message.channel.guild.id,message.author.id,message,false)
 });
+client.on('voiceStateUpdate', (data) => {
+    let guild = client.guilds.cache.get(data.guild.id);
+    let channelID = (data.channelID) ? data.channelID : guild.voiceStates.cache.get(data.id).channelID;
+    let voiceChannel = client.channels.cache.get(channelID)
+
+    if(voiceChannel.members.size == 0 && guild.get(channelID) == "locked") {
+        guild.set(channelID, 'unlocked')
+        voiceChannel.setUserLimit(0)
+    }
+});
 
 
 
