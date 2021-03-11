@@ -3,29 +3,45 @@ const fetch = require('node-fetch');
 
 class GifCommand extends Command {
     constructor() {
-        super('gif', {
-            aliases: ['gif', 'meme'],
-            description: 'Returns you a gif \n   Usage: `###<gif|meme> <search>`'
-        });
-    }
-
-    search(input) {
-        return new Promise(function (res, rej) {
-            if (!input) rej('[Error] Missing Input');
-            fetch("https://api.giphy.com/v1/gifs/search?q="+input.content+"&api_key=M6MBI02GaH7SYFVuHVCJcq99ZSpm50uY&limit=1", {
-                method: 'GET'
-            })
-                .then(res => res.json())
-                .then(body => {
-                    res(body.data[0].images.original.url)
-                })
-                .catch(e => rej(e));
+        super('meme', {
+            aliases: ['meme'],
+            description: 'Returns you a random meme!'
         });
     }
 
     async exec(message) {
         message.delete();
-        message.channel.send(await this.search(message));
+        let last_id = '';
+        loadMeme(Math.floor(Math.random() * 10000), message);
+
+        async function loadMeme(number, message) {
+            let numbers = number > 100 ? number / 100 : 2;
+            for (let index = 0; index < numbers; index++) {
+                let extension = last_id != '' ? '&after=' + last_id : '';
+                let url =
+                    'https://www.reddit.com/r/meme.json?limit=100' + extension;
+                fetch(url, { method: 'GET' })
+                    .then(response => response.json())
+                    .then(result =>
+                        callback(result['data']['children'][100]['data']['name'])
+                    )
+                    .catch(error => console.log('error', error));
+            }
+            fetch('https://www.reddit.com/r/meme.json?limit=100' + last_id, {
+                method: 'GET'
+            })
+                .then(response => response.json())
+                .then(result =>
+                    message.channel.send(
+                        result['data']['children'][Math.floor(Math.random() * 100)]['data']['url']
+                    )
+                )
+                .catch(error => console.log('error', error));
+        }
+
+        function callback(id) {
+            last_id = id;
+        }
     }
 }
 
